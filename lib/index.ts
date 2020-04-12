@@ -4,9 +4,12 @@ import Condition from "./Condition";
 import transaction from "./Transaction";
 import aws from "./aws";
 import Internal from "./Internal";
+import {construct} from "./decorators/construct";
 
 export = {
-	Model,
+	model: (name: string, schema: any) => construct(schema)(
+		Object.defineProperty(class extends Model {}, 'name', {value: name})
+	),
 	Schema,
 	Condition,
 	transaction,
